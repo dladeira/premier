@@ -1,0 +1,21 @@
+{
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "nuxt dev --port 3042 --dotenv ../.env",
+        "build": "nuxt build --dotenv ../.env",
+        "start": "NITRO_PORT=3042 node ./.output/server/index.mjs",
+        "postinstall": "nuxt prepare"
+    },
+    "dependencies": {
+        "@nuxt/image": "^1.7.0",
+        "@pinia/nuxt": "^0.5.1",
+        "nuxt": "^3.12.3",
+        "pinia": "^2.1.7",
+        "vue": "latest"
+    },
+    "overrides": {
+        "vue": "latest"
+    }
+}
