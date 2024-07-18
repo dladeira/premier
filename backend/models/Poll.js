@@ -6,7 +6,15 @@ const pollSchema = mongoose.Schema({
     options: [
         {
             name: String,
-            votes: Number,
+            votes: {
+                type: [
+                    {
+                        type: mongoose.Types.ObjectId,
+                        ref: "User",
+                    },
+                ],
+                default: [],
+            },
         },
     ],
     endTime: Number,

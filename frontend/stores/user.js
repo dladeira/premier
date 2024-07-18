@@ -1,13 +1,20 @@
 export const useUserStore = defineStore("user", () => {
     const userData = useState("user-data");
+    const polls = useState("polls", () => []);
 
     async function loadData() {
-        const data = await $fetch("/api" + "/auth/data", {
+        var data = await $fetch("/api" + "/auth/data", {
             method: "POST",
         });
 
         if (!data) userData.value = null;
         else userData.value = data;
+
+        var data = await $fetch("/api/polls", {
+            method: "GET",
+        });
+
+        polls.value = data;
     }
 
     async function login(username, password) {
@@ -42,12 +49,38 @@ export const useUserStore = defineStore("user", () => {
         loadData();
     }
 
+    async function createPoll(title, description, options, endTime) {
+        await $fetch("/api/polls/create", {
+            method: "POST",
+            body: {
+                title,
+                description,
+                options,
+                endTime,
+            },
+        });
+    }
+
+    async function deletePoll(_id) {
+        await $fetch("/api/polls/delete", {
+            method: "POST",
+            body: {
+                _id,
+            },
+        });
+
+        loadData();
+    }
+
     loadData();
 
     return {
         data: userData,
+        polls,
         login,
         signup,
         logout,
+        createPoll,
+        deletePoll,
     };
 });

@@ -1,6 +1,7 @@
 <template>
     <div>this is a test page</div>
     <div>{{ user.data }}</div>
+    <div>{{ user.polls }}</div>
 
     <div v-if="!user.data">
         Login
@@ -19,6 +20,8 @@
     </div>
 
     <div v-if="user.data">
+        <CreatePoll />
+        <DeletePoll />
         <button @click="user.logout()">Logout</button>
     </div>
 </template>

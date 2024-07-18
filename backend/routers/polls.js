@@ -1,0 +1,43 @@
+const express = require("express");
+const router = express.Router();
+
+const User = require("../models/User");
+const Poll = require("../models/Poll");
+
+const loggedIn = require("../middleware/loggedIn");
+
+router.get("/", async (req, res) => {
+    return res.status(200).json(await Poll.find({}).lean());
+});
+
+router.post("/create", loggedIn, async (req, res) => {
+    const poll = new Poll({
+        title: req.body.title,
+        description: req.body.description,
+        options: req.body.options,
+        endTime: req.body.endTime,
+        owner: req.user._id,
+    });
+
+    await poll.save();
+    res.status(200).send();
+});
+
+router.post("/edit", loggedIn, async (req, res) => {
+    const foundPoll = await Poll.findOne({ _id: req.body._id });
+
+    foundPoll.title = req.body.title;
+    foundPoll.description = req.body.description;
+
+    await foundPoll.save();
+
+    return res.status(200).send();
+});
+
+router.post("/delete", loggedIn, async (req, res) => {
+    const { deletedCount } = await Poll.deleteOne({ _id: req.body._id });
+    if (deletedCount > 0) return res.status(200).send();
+    else return res.status(400).send();
+});
+
+module.exports = router;
