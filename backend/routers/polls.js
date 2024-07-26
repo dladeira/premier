@@ -23,11 +23,13 @@ router.post("/create", loggedIn, async (req, res) => {
     res.status(200).send();
 });
 
-router.post("/edit", loggedIn, async (req, res) => {
+router.post("/update", loggedIn, async (req, res) => {
     const foundPoll = await Poll.findOne({ _id: req.body._id });
 
     foundPoll.title = req.body.title;
     foundPoll.description = req.body.description;
+    foundPoll.options = req.body.options;
+    foundPoll.endTime = req.body.endTime;
 
     await foundPoll.save();
 

@@ -21,13 +21,18 @@
 
     <div v-if="user.data">
         <CreatePoll />
-        <DeletePoll />
+        <h1>Your Polls</h1>
+        <OwnPoll v-for="poll of userPolls" :poll="poll" />
         <button @click="user.logout()">Logout</button>
     </div>
 </template>
 
 <script setup>
 const user = useUserStore();
+
+const userPolls = computed(() =>
+    user.polls.filter((i) => i.owner == user.data._id)
+);
 
 function login(e) {
     user.login(e.target.username.value, e.target.password.value);

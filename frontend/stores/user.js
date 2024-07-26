@@ -59,6 +59,23 @@ export const useUserStore = defineStore("user", () => {
                 endTime,
             },
         });
+
+        loadData();
+    }
+
+    async function updatePoll(_id, title, description, options, endTime) {
+        await $fetch("/api/polls/update", {
+            method: "POST",
+            body: {
+                _id,
+                title,
+                description,
+                options,
+                endTime,
+            },
+        });
+
+        loadData();
     }
 
     async function deletePoll(_id) {
@@ -81,6 +98,7 @@ export const useUserStore = defineStore("user", () => {
         signup,
         logout,
         createPoll,
+        updatePoll,
         deletePoll,
     };
 });
