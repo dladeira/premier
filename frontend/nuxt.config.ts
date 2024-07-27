@@ -13,4 +13,15 @@ export default defineNuxtConfig({
             "/api": { target: process.env.API_SERVER, changeOrigin: true },
         },
     },
+
+    css: ["@/assets/styles/global.scss"],
+    vite: {
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    additionalData: '@import "@/assets/styles/variables.scss";',
+                },
+            },
+        },
+    },
 });

@@ -42,4 +42,20 @@ router.post("/delete", loggedIn, async (req, res) => {
     else return res.status(400).send();
 });
 
+router.post("/vote", loggedIn, async (req, res) => {
+    const foundPoll = await Poll.findOne({ _id: req.body.pollId });
+
+    for (var option of foundPoll.options) {
+        option.votes = option.votes.filter((i) => i != req.user._id);
+    }
+
+    foundPoll.options
+        .find((i) => i._id == req.body.optionId)
+        .votes.push(req.user._id);
+
+    await foundPoll.save();
+
+    return res.status(200).send();
+});
+
 module.exports = router;

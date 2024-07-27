@@ -2,6 +2,11 @@ export const useUserStore = defineStore("user", () => {
     const userData = useState("user-data");
     const polls = useState("polls", () => []);
 
+    setInterval(() => {
+        console.log("loading data");
+        loadData();
+    }, 1000);
+
     async function loadData() {
         var data = await $fetch("/api" + "/auth/data", {
             method: "POST",
@@ -89,6 +94,18 @@ export const useUserStore = defineStore("user", () => {
         loadData();
     }
 
+    async function vote(pollId, optionId) {
+        await $fetch("/api/polls/vote", {
+            method: "POST",
+            body: {
+                pollId,
+                optionId,
+            },
+        });
+
+        loadData();
+    }
+
     loadData();
 
     return {
@@ -100,5 +117,6 @@ export const useUserStore = defineStore("user", () => {
         createPoll,
         updatePoll,
         deletePoll,
+        vote,
     };
 });

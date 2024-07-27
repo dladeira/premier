@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+html,
+body,
+#__nuxt {
+    position: relative;
+
+    min-height: 100vh;
+    width: 100%;
+
+    margin: 0;
+
+    font-family: "Inter", sans-serif;
+
+    scroll-behavior: smooth;
+
+    font-size: 16px;
+    color: white;
+
+    @include laptop-only {
+        font-size: 14px;
+    }
+
+    @include small-laptop-only {
+        font-size: 12px;
+    }
+
+    @include tablet-below {
+        font-size: 12px;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+// ==========
+// SCROLLBAR
+// ==========
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none; /* IE 11 */
+    scrollbar-width: none; /* Firefox 64 */
+    overflow: -moz-scrollbars-none;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+    display: none;
+    background: rgba(255, 255, 255, 0);
+
+    border-radius: 1000px;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: rgba(255, 255, 255, 0);
+
+    border-radius: 1000px;
+}

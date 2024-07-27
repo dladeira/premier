@@ -26,11 +26,6 @@
         <button @click="user.deletePoll(poll._id)">Delete Poll</button>
     </div>
 </template>
-<style lang="scss" scoped>
-.own-poll-container {
-    margin: 2rem;
-}
-</style>
 
 <script setup>
 const user = useUserStore();
@@ -42,17 +37,9 @@ const props = defineProps({
 const title = ref(props.poll.title);
 const description = ref(props.poll.title);
 const options = ref(props.poll.options);
-const endTime = computed(() =>
-    new Date(endTimeDate.value + " " + endTimeTime.value).getTime()
-);
-const endTimeDate = ref(
-    new Date(props.poll.endTime).toISOString().split("T")[0]
-);
-const endTimeTime = ref(
-    `${new Date(props.poll.endTime).getHours()}:${new Date(
-        props.poll.endTime
-    ).getMinutes()}`
-);
+const endTime = computed(() => new Date(endTimeDate.value + " " + endTimeTime.value).getTime());
+const endTimeDate = ref(new Date(props.poll.endTime).toISOString().split("T")[0]);
+const endTimeTime = ref(`${new Date(props.poll.endTime).getHours()}:${new Date(props.poll.endTime).getMinutes()}`);
 
 function addOption() {
     options.value.push({
@@ -64,18 +51,10 @@ function addOption() {
 watch([title, description, options, endTime], updatePoll, { deep: true });
 
 function updatePoll() {
-    user.updatePoll(
-        props.poll._id,
-        title.value,
-        description.value,
-        options.value,
-        endTime.value
-    );
+    user.updatePoll(props.poll._id, title.value, description.value, options.value, endTime.value);
 }
 function generateId() {
-    return [...Array(24)]
-        .map(() => Math.floor(Math.random() * 16).toString(16))
-        .join("");
+    return [...Array(24)].map(() => Math.floor(Math.random() * 16).toString(16)).join("");
 }
 
 function deleteOption(_id) {
