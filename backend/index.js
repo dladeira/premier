@@ -7,7 +7,7 @@ async function bootstrap() {
     await mongoose.connect(process.env.MONGODB_URL);
     console.log("Connected to MongoDB");
 
-    await app.listen(3043);
+    await app.listen(3042);
     console.log("--> Done! Listening on 3043");
 }
 
