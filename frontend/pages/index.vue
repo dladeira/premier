@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        {{ user.data }}
         <button @click="user.logout()" class="logout" v-if="user.data">Logout</button>
         <div class="content-container">
             <div class="text-title">
