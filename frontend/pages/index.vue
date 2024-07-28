@@ -15,10 +15,12 @@
                 <div class="polls-inner-container">
                     <div v-if="managing">
                         <OwnPoll v-for="poll of userPolls" :poll="poll" />
+                        <div v-if="userPolls.length == 0" class="info">You don't have any polls</div>
                         <CreatePoll />
                     </div>
                     <div v-else>
                         <OtherPoll v-for="poll of otherPolls" :poll="poll" />
+                        <div v-if="otherPolls.length == 0" class="info">No polls active</div>
                     </div>
                 </div>
             </div>
@@ -53,7 +55,12 @@
     &:active {
         background-color: rgba(white, 0.5);
     }
+
+    @include phone-only {
+        left: 1.5rem;
+    }
 }
+
 .container {
     height: 100vh;
     margin: 0;
@@ -63,7 +70,13 @@
     background: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.27) 53.5%, rgba(0, 0, 0, 0.78) 67%, #000 100%), url("https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/e496f2101153245.5f185ec683a78.png") lightgray 50% / cover no-repeat;
     background-image: cover;
     background-position: center;
+
+    @include phone-only {
+        padding: 2rem 0 5rem;
+        background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/e496f2101153245.5f185ec683a78.png") lightgray 50% / cover no-repeat;
+    }
 }
+
 .content-container {
     display: flex;
     flex-direction: column;
@@ -75,6 +88,11 @@
     height: 100%;
 
     overflow-y: overlay;
+
+    @include phone-only {
+        margin: 0 auto;
+        width: 90%;
+    }
 }
 
 .subtitle {
@@ -89,6 +107,10 @@
 
     font-size: 6rem;
     font-weight: 700;
+
+    @include phone-only {
+        font-size: 5rem;
+    }
 }
 
 .polls-container {
@@ -155,6 +177,15 @@
     &-inactive {
         @extend .button;
     }
+}
+
+.info {
+    width: fit-content;
+
+    margin: 1rem auto 0;
+
+    font-style: italic;
+    color: rgba(white, 0.75);
 }
 </style>
 

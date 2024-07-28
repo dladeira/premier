@@ -54,14 +54,14 @@ export const useUserStore = defineStore("user", () => {
         loadData();
     }
 
-    async function createPoll(title, description, options, endTime) {
+    async function createPoll() {
         await $fetch("/api/polls/create", {
             method: "POST",
             body: {
-                title,
-                description,
-                options,
-                endTime,
+                title: "New Poll Title",
+                description: "New Poll Description",
+                options: [{ name: "Option 1" }, { name: "Option 2" }, { name: "Option 3" }],
+                endTime: Date.now() + 1000 * 60 * 60 * 60,
             },
         });
 
