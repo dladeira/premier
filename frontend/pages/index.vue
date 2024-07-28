@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        {{ user.data }}
         <button @click="user.logout()" class="logout" v-if="user.data">Logout</button>
         <div class="content-container">
             <div class="text-title">
@@ -193,7 +194,7 @@
 const user = useUserStore();
 const managing = useState("managing", () => true);
 
-const userPolls = computed(() => (user ? user.polls.filter((i) => i.owner == user.data._id) : []));
+const userPolls = [];
 
-const otherPolls = computed(() => (user ? user.polls.filter((i) => i.owner != user.data._id) : []));
+const otherPolls = [];
 </script>

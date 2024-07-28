@@ -3,7 +3,7 @@ module.exports = {
         {
             name: "premier-frontend",
             script: "npm",
-            args: "start",
+            args: "dev",
         },
     ],
 };

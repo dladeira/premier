@@ -8,7 +8,7 @@ async function bootstrap() {
     console.log("Connected to MongoDB");
 
     await app.listen(3042);
-    console.log("--> Done! Listening on 3043");
+    console.log("--> Done! Listening on 3042");
 }
 
 bootstrap();
