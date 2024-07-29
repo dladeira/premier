@@ -49,9 +49,7 @@ router.post("/vote", loggedIn, async (req, res) => {
         option.votes = option.votes.filter((i) => i != req.user._id);
     }
 
-    foundPoll.options
-        .find((i) => i._id == req.body.optionId)
-        .votes.push(req.user._id);
+    foundPoll.options.find((i) => i._id == req.body.optionId).votes.push(req.user._id);
 
     await foundPoll.save();
 

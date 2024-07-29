@@ -1,6 +1,6 @@
 <template>
     <div class="create-poll-container">
-        <form @submit.prevent="createPoll">
+        <form @submit.prevent="createPoll()">
             <button type="submit" class="create-new-poll">Create A New Poll</button>
         </form>
     </div>
@@ -8,8 +8,12 @@
 
 <style lang="scss" scoped>
 .create-new-poll {
-    margin-top: 4rem;
-    padding: 0.25rem 0.5rem;
+    display: block;
+
+    margin: 4rem auto 0;
+    padding: 0.5rem 0.75rem;
+
+    border: 1px solid white;
 
     font-size: 1.25rem;
     background-color: transparent;

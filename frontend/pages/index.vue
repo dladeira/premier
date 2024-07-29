@@ -193,7 +193,7 @@
 const user = useUserStore();
 const managing = useState("managing", () => true);
 
-const userPolls = [];
+const userPolls = computed(() => user.polls.filter((i) => i.owner == user.data._id));
 
-const otherPolls = [];
+const otherPolls = computed(() => user.polls.filter((i) => i.owner != user.data._id));
 </script>
