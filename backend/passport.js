@@ -15,10 +15,10 @@ passport.deserializeUser((user, cb) => {
 passport.use(
     new LocalStrategy(async (username, password, done) => {
         const user = await User.findOne({ username });
-        if (!user) return done(null, false);
+        if (!user) return done(null, undefined);
 
         const result = await bcrypt.compare(password, user.hash);
-        if (!result) return done(null, false);
+        if (!result) return done(null, undefined);
         return done(null, user);
     })
 );

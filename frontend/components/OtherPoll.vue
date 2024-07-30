@@ -110,6 +110,10 @@
 
         background-color: white;
         color: black;
+
+        &:hover {
+            background-color: white;
+        }
     }
 }
 </style>

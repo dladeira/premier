@@ -3,7 +3,6 @@ export const useUserStore = defineStore("user", () => {
     const polls = useState("polls", () => []);
 
     setInterval(() => {
-        console.log("loading data");
         loadData();
     }, 1000);
 
@@ -23,27 +22,37 @@ export const useUserStore = defineStore("user", () => {
     }
 
     async function login(username, password) {
-        await $fetch("/api" + "/auth/login", {
-            method: "POST",
-            body: {
-                username,
-                password,
-            },
-        });
+        try {
+            await $fetch("/api" + "/auth/login", {
+                method: "POST",
+                body: {
+                    username,
+                    password,
+                },
+            });
 
-        loadData();
+            loadData();
+            return true;
+        } catch {
+            return false;
+        }
     }
 
     async function signup(username, password) {
-        await $fetch("/api" + "/auth/signup", {
-            method: "POST",
-            body: {
-                username,
-                password,
-            },
-        });
+        try {
+            await $fetch("/api" + "/auth/signup", {
+                method: "POST",
+                body: {
+                    username,
+                    password,
+                },
+            });
 
-        loadData();
+            loadData();
+            return true;
+        } catch {
+            return false;
+        }
     }
 
     async function logout() {

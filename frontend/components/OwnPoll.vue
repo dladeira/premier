@@ -137,6 +137,7 @@ function addOption() {
     options.value.push({
         name: "new option",
         _id: generateId(),
+        votes: [],
     });
 }
 

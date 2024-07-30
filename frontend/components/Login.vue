@@ -1,53 +1,27 @@
 <template>
     <div class="text-container">
         <form class="form" @submit.prevent="login" v-if="loginActive">
-            <input
-                class="input"
-                type="text"
-                name="username"
-                placeholder="Username"
-            />
-            <input
-                class="input"
-                type="text"
-                name="password"
-                placeholder="Password"
-            />
+            <div class="input-error">&nbsp;{{ error }}</div>
+            <input class="input" type="text" name="username" placeholder="Username" />
+            <input class="input" type="password" name="password" placeholder="Password" />
             <button type="submit" class="button">Login</button>
 
             <p class="alternate">
                 No account yet?
                 <br />
-                <span
-                    class="alternate-switch"
-                    @click="loginActive = !loginActive"
-                    >Register</span
-                >
+                <span class="alternate-switch" @click="loginActive = !loginActive">Register</span>
             </p>
         </form>
         <form class="form" @submit.prevent="signup" v-else>
-            <input
-                class="input"
-                type="text"
-                name="username"
-                placeholder="Username"
-            />
-            <input
-                class="input"
-                type="text"
-                name="password"
-                placeholder="Password"
-            />
+            <div class="input-error">&nbsp;{{ error }}</div>
+            <input class="input" type="text" name="username" placeholder="Username" />
+            <input class="input" type="password" name="password" placeholder="Password" />
             <button type="submit" class="button">Register</button>
 
             <p class="alternate">
                 Already have an account?
                 <br />
-                <span
-                    class="alternate-switch"
-                    @click="loginActive = !loginActive"
-                    >Login</span
-                >
+                <span class="alternate-switch" @click="loginActive = !loginActive">Login</span>
             </p>
         </form>
     </div>
@@ -131,17 +105,36 @@
         }
     }
 }
+
+.input-error {
+    color: red;
+}
 </style>
 
 <script setup>
 const user = useUserStore();
 const loginActive = useState("login", () => true);
+const error = useState("login-error");
 
-function login(e) {
-    user.login(e.target.username.value, e.target.password.value);
+async function login(e) {
+    const result = await user.login(e.target.username.value, e.target.password.value);
+
+    if (!result) {
+        error.value = "Invalid username or password";
+        setTimeout(() => {
+            error.value = "";
+        }, 2000);
+    }
 }
 
 async function signup(e) {
-    await user.signup(e.target.username.value, e.target.password.value);
+    const result = await user.signup(e.target.username.value, e.target.password.value);
+
+    if (!result) {
+        error.value = "Username already exists";
+        setTimeout(() => {
+            error.value = "";
+        }, 2000);
+    }
 }
 </script>

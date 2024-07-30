@@ -11,6 +11,9 @@ router.post("/data", (req, res) => {
 router.post("/signup", async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, 10);
 
+    const existingUser = await User.findOne({ username: req.body.username });
+    if (existingUser) return res.status(400).send();
+
     const user = new User({
         username: req.body.username,
         hash,
