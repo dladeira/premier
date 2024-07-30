@@ -23,7 +23,7 @@ router.post("/create", loggedIn, async (req, res) => {
 });
 
 router.post("/update", loggedIn, async (req, res) => {
-    const foundPoll = await Poll.findOne({ _id: req.body._id });
+    const foundPoll = await Poll.findOne({ _id: req.body._id, owner: req.user._id });
 
     foundPoll.title = req.body.title;
     foundPoll.description = req.body.description;
@@ -36,13 +36,15 @@ router.post("/update", loggedIn, async (req, res) => {
 });
 
 router.post("/delete", loggedIn, async (req, res) => {
-    const { deletedCount } = await Poll.deleteOne({ _id: req.body._id });
+    const { deletedCount } = await Poll.deleteOne({ _id: req.body._id, owner: req.user._id });
     if (deletedCount > 0) return res.status(200).send();
     else return res.status(400).send();
 });
 
 router.post("/vote", loggedIn, async (req, res) => {
     const foundPoll = await Poll.findOne({ _id: req.body.pollId });
+
+    if (Date.now() > foundPoll.endTime) return res.status(400).send();
 
     for (var option of foundPoll.options) {
         option.votes = option.votes.filter((i) => i != req.user._id);
